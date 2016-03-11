@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package streaming.servlet;
+package enchere.servlet;
 
-import streaming.spring.AutowireServlet;
+import enchere.spring.AutowireServlet;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import streaming.service.EffacemoiCrudService;
+import enchere.service.EffacemoiCrudService;
 
 /**
  *
@@ -23,10 +23,10 @@ public class MyServiceServlet extends AutowireServlet {
 
     @Autowired
     private EffacemoiCrudService service;
+    
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        
         System.out.println( "*** Nombre de records: " + service.count() );
     }
 }

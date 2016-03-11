@@ -1,0 +1,72 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 7 mars 2016, 14:13:21
+    Author     : admin
+*/
+.pied{
+    font-size: 18px;
+    text-align: center;
+    border-style: solid;
+    border-radius: 10pt;
+    color: white;
+}
+.centrer{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5%;
+    color: black;
+}
+
+
+table, tr{
+    text-align: center;
+    border-style: solid;
+   
+}
+
+.ajout{
+    border-style: solid;
+    background-color: gray;
+    color: white;
+    border-color: black;
+        
+}
+
+
+
+.menu{
+    text-align: center;
+    background-color: #333333;
+    color: white;
+}
+
+.titre{
+    text-align: center;
+    background-color: white;
+    font-size: 25px;
+
+}
+
+body{
+    /*background-image: url('image/salle-de-cinema-le-cinema-de-personne-1320.png');*/
+    background-size: 100%;
+    background-color: grey;
+    text-align: center;
+}
+
+a:hover{
+    color: gold;
+}
+
+a:active, a:default a:after{
+    color: white;
+}
+
+a{
+    color: red;
+    text-decoration: none;
+}
