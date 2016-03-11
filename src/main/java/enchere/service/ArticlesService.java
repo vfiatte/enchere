@@ -15,4 +15,5 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface ArticlesService extends CrudRepository<Articles, Long>{
     public List<Articles> findAllByCategorieId(Long id);
+    public List<Articles> findAllByStatut(String s);
 }
