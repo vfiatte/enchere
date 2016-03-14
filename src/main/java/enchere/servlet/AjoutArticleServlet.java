@@ -42,12 +42,13 @@ public class AjoutArticleServlet extends AutowireServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        
         Articles a = new Articles();
         String nom = req.getParameter("nom");
         String description = req.getParameter("description");
         Long prixDepart = Long.parseLong(req.getParameter("prixDepart"));
         Long categorie = Long.parseLong(req.getParameter("categorie"));
-        int temps = Integer.parseInt(req.getParameter("tempsValidite"));
+        Integer temps = Integer.parseInt(req.getParameter("tempsValidite"));
 
         a.setNom(nom);
         a.setDescription(description);
@@ -66,7 +67,10 @@ public class AjoutArticleServlet extends AutowireServlet {
 
         Categorie cat = categorieService.findOne(categorie);
         a.setCategorie(cat);
+        cat.getListeArticle().add(a);
         articlesService.save(a);
+        categorieService.save(cat);
+        utilisateurService.save(login);
         resp.sendRedirect("listearticlesservlet");
     }
 

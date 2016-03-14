@@ -44,7 +44,7 @@ public class AjoutUtilisateurServlet extends AutowireServlet {
                     u.setEmail(email);
                     u.setMdp(mdp1);
                     utilisateurService.save(u);
-                    resp.sendRedirect("PageAccueilServlet");
+                    resp.sendRedirect("Login.jsp");
                 } else {
                     req.setAttribute("mdpdifferent", "Les mots de passe ne correspondent pas");
                     req.getRequestDispatcher("Inscription.jsp").include(req, resp);

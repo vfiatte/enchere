@@ -7,8 +7,10 @@ package enchere.servlet;
 
 import enchere.entity.Articles;
 import enchere.entity.Categorie;
+import enchere.enumeration.StatutEnumeration;
 import enchere.service.ArticlesService;
 import enchere.service.CategorieService;
+import enchere.service.ConfigService;
 import enchere.service.ListeCategorieService;
 import enchere.spring.AutowireServlet;
 import java.io.IOException;
@@ -34,9 +36,15 @@ public class ListeArticlesServlet extends AutowireServlet {
 
     @Autowired
     CategorieService categorieService;
+    
+    @Autowired
+    ConfigService configService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        configService.finEnchere();
+        
+        
         List<Categorie> listeCategorie = (List<Categorie>) categorieService.findAll();
         if (listeCategorie.size() == 0) {
             listeCategorieService.listeCategorie();
@@ -44,7 +52,7 @@ public class ListeArticlesServlet extends AutowireServlet {
         }
         req.setAttribute("categorie", listeCategorie);
 
-        List<Articles> a = (List<Articles>) articleService.findAll();
+        List<Articles> a = (List<Articles>) articleService.findAllByStatut(StatutEnumeration.DISPONIBLE);
 
         req.setAttribute("titre", "Liste des Articles disponibles");
         req.setAttribute("Articles", a);

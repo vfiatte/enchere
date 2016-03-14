@@ -7,10 +7,14 @@ package enchere.servlet;
 
 import enchere.entity.Articles;
 import enchere.entity.Enchere;
+import enchere.entity.Utilisateur;
 import enchere.service.ArticlesService;
+import enchere.service.EnchereService;
 import enchere.service.FaireUneEnchereService;
+import enchere.service.UtilisateurService;
 import enchere.spring.AutowireServlet;
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,20 +34,36 @@ public class FaireEnchereServlet extends AutowireServlet {
     @Autowired
     ArticlesService articlesService;
 
+    @Autowired
+    UtilisateurService utilisateurService;
+
+    @Autowired
+    EnchereService enchereService;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Long articleId = Long.parseLong(req.getParameter("idArticle"));
-        Articles a = articlesService.findOne(articleId);
+        Utilisateur u = utilisateurService.findOneByLogin((String) req.getSession().getAttribute("user"));
+        Long idArticle = Long.parseLong(req.getParameter("idArticle"));
+        Articles a = articlesService.findOne(idArticle);
+        List<Enchere> listeEnchereArticle = a.getListeEnchere();
 
-        if (req.getSession().getAttribute("user").equals(a.getUtilisateur().getLogin())) {
-            req.setAttribute("votreArticle", "Vous ne pouvez pas enrichir sur votre propre article");
+        if (a.getUtilisateur().getLogin().equals(u.getLogin())) {
+            req.setAttribute("votreArticle", "Vous ne pouvez pas encherir sur votre propre article");
             req.getRequestDispatcher("DetailArticleServlet").include(req, resp);
-        } else {
-            Enchere e = new Enchere();
-            faireEnchere.encherir(a);
-            req.getRequestDispatcher("DetailArticleServlet").include(req, resp);
+            return;
         }
 
-    }
+        if (listeEnchereArticle.size() > 0) {
+            Enchere e = listeEnchereArticle.get(listeEnchereArticle.size() - 1);
+            if (e.getUtilisateur().getLogin().equals(u.getLogin())) {
+                req.setAttribute("dernier", "Vous êtes le dernier à avoir encheri sur cet article");
+                req.getRequestDispatcher("DetailArticleServlet").include(req, resp);
+                return;
+            }
 
+        }
+        faireEnchere.encherir(a, u);
+        req.getRequestDispatcher("DetailArticleServlet").include(req, resp);
+
+    }
 }

@@ -13,5 +13,6 @@ package enchere.enumeration;
 public enum StatutEnumeration {
     DISPONIBLE,
     REMPORTE,
+    APAYER,
     PAYE;
 }

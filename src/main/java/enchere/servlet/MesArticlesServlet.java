@@ -6,7 +6,12 @@
 package enchere.servlet;
 
 import enchere.entity.Articles;
+import enchere.entity.Enchere;
+import enchere.entity.Utilisateur;
+import enchere.enumeration.StatutEnumeration;
 import enchere.service.ArticlesService;
+import enchere.service.EnchereService;
+import enchere.service.UtilisateurService;
 import enchere.spring.AutowireServlet;
 import java.io.IOException;
 import java.util.List;
@@ -14,7 +19,6 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import static org.apache.coyote.http11.Constants.a;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -27,30 +31,33 @@ public class MesArticlesServlet extends AutowireServlet {
     @Autowired
     ArticlesService articleService;
 
+    @Autowired
+    UtilisateurService utilisateurService;
+    
+    @Autowired
+    EnchereService enchereService;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //        List<Categorie> listeCategorie = (List<Categorie>) categorieService.findAll();
-        //        if (listeCategorie.size() == 0) {
-        //            listeCategorieService.listeCategorie();
-        //            listeCategorie = (List<Categorie>) categorieService.findAll();
-        //        }
-        //        req.setAttribute("categorie", listeCategorie);
+        Utilisateur u = utilisateurService.findOneByLogin((String) req.getSession().getAttribute("user"));//Je recupere le login de l'utilisateur de la session
         
-        if (req.getSession().getAttribute("user").equals(a.ge)){
-            if(List<Articles> articlePaye =  articleService.findAllByStatut("PAYE")){
-                
-            }
-        }
+        List<Articles> listeAUtilisateur = u.getListeArticle();
+        req.setAttribute("vosArticlesPostes", listeAUtilisateur);
         
         
-                
+        List<Articles> listeEnchereEncours = articleService.findDistinctArticlesByStatutAndListeEnchereUtilisateur(StatutEnumeration.DISPONIBLE, u);
+        req.setAttribute("mesEncheres", listeEnchereEncours);
         
-        if (req.getSession().getAttribute(string)) {
-        }
-        a = (List<Articles>) articleService.findAll();
-        req.setAttribute("titre", "Liste des Articles disponibles");
-        req.setAttribute("Articles", a);
-        req.getRequestDispatcher("ListeArticles.jsp").include(req, resp);
+        
+        List<Articles> listeApayer = articleService.findAllByUtilisateurLoginAndStatut(u, StatutEnumeration.APAYER);
+        req.setAttribute("ArticlesAPayer", listeApayer);
+        
+        List<Articles> listePaye = articleService.findAllByUtilisateurLoginAndStatut(u, StatutEnumeration.PAYE);
+        req.setAttribute("ArticlesPayes", listePaye);
+        
+        req.getRequestDispatcher("MesArticles.jsp").include(req, resp);
+
+        
     }
 
 }

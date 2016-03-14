@@ -39,16 +39,20 @@ public class LoginServlet extends AutowireServlet {
         if (util == null) {
             req.getRequestDispatcher("Inscription.jsp").include(req, resp);
         }
-        else if(util.getMdp().equals(mdp)) {
-            req.getSession().setAttribute("user", req.getParameter("login")); //On obtient le nom d'utilisateur
-            req.getSession().setAttribute("userMdp", req.getParameter("mdp"));
-            resp.sendRedirect("PageAccueilServlet");
-        } else {
+        else  {
+            if ((util.getMdp().equals(mdp))){
+                req.getSession().setAttribute("user", req.getParameter("login"));
+                req.getSession().setAttribute("userMdp", req.getParameter("mdp"));
+                resp.sendRedirect("PageAccueilServlet");
+                
+            }
+            else {
             req.setAttribute("mdpincorect", "La connexion a echoué");
             req.getRequestDispatcher("Login.jsp").include(req, resp);
-        }
+            }
 
 //        req.getRequestDispatcher("AcceuilServlet").include(req, resp);
     }
 
+}
 }

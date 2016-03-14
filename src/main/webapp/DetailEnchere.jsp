@@ -40,6 +40,7 @@
                 </tr>
             </table>
                 ${votreArticle}
+                ${dernier}
         </div>
 
         <br>

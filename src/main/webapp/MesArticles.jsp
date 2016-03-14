@@ -20,63 +20,86 @@
             <table>
                 <thead>
                     <tr>
-                        <td colspan="3">Articles en cours d'enchere</td>
+                        <td colspan="3">Vos Artciles mis en enchere</td></b>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>Nom</td>
-                        <td>Aperçu</td>
+                        <td>Apercu</td>
                         <td>Acceder a l enchere</td>
                     </tr>
 
-                    <c:forEach items="${Articles}" var="monArticle">
+                    <c:forEach items="${vosArticlesPostes}" var="monArticlePoste">
                         <tr>
-                            <td>${monArticle.nom}</td>
+                            <td>${monArticlePoste.nom}</td>
+                            <td>photo</td>
+                            <td><a href = "DetailArticleServlet?idArticle=${monArticlePoste.id}">Enchere</a></td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+            <br><br>
+            <table>
+                <thead>
+                    <tr>
+                <b><td colspan="3">Historique des encheres</td></b>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Articles</td>
+                            <td>Acceder a l enchere</td>
+                        </tr>
+
+                        <c:forEach items="${mesEncheres}" var="monEnchere">
+                            <tr>
+                                <td>${monEnchere.nom}</td>
+                                <td><a href = "DetailArticleServlet?idArticle=${monEnchere.id}">Enchere</a></td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+            </table>
+            <br><br>
+            <table>
+                <thead>
+                    <tr>
+                        <b><td colspan="3">Articles a payer</td></b>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Nom</td>
+                        <td>Apercu</td>
+                        <td>Acceder aux details</td>
+                    </tr>
+
+                    <c:forEach items="${ArticlesAPayer}" var="monArticleAPayer">
+                        <tr>
+                            <td>${monArticleAPayer.nom}</td>
                             <td>photo</td>
                             <td>photo</td>
                         </tr>
                     </c:forEach>
                 </tbody>
             </table>
+            <br><br>
             <table>
                 <thead>
                     <tr>
-                        <td colspan="3">Articles a payer</td>
+                        <b><td colspan="3">Articles payes</td></b>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>Nom</td>
-                        <td>Aperçu</td>
+                        <td>Apercu</td>
                         <td>Acceder aux details</td>
                     </tr>
 
-                    <c:forEach items="${Articles}" var="monArticle">
+                    <c:forEach items="${ArticlesPayes}" var="monArticlePaye">
                         <tr>
-                            <td>${monArticle.nom}</td>
-                            <td>photo</td>
-                            <td>photo</td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-            <table>
-                <thead>
-                    <tr>
-                        <td colspan="3">Articles paye</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Nom</td>
-                        <td>Aperçu</td>
-                        <td>Acceder aux details</td>
-                    </tr>
-
-                    <c:forEach items="${Articles}" var="monArticle">
-                        <tr>
-                            <td>${monArticle.nom}</td>
+                            <td>${monArticlePaye.nom}</td>
                             <td>photo</td>
                             <td>photo</td>
                         </tr>
